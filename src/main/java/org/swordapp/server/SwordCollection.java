@@ -56,7 +56,7 @@ public class SwordCollection
         for (String mpa : this.multipartAccept)
         {
             Element element = this.abdera.getFactory().newElement(UriRegistry.APP_ACCEPT);
-            element.setAttributeValue("alternate", "multipart/related");
+            element.setAttributeValue("alternate", "multipart-related");
 			element.setText(mpa);
             abderaCollection.addExtension(element);
         }
