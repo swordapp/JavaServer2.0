@@ -257,6 +257,22 @@ public class SwordAPIEndpoint
 		}
 	}
 
+	protected void cleanup(Deposit deposit)
+	{
+		if (deposit == null)
+		{
+			return;
+		}
+
+		File tmp = deposit.getFile();
+		if (tmp == null)
+		{
+			return;
+		}
+
+		tmp.delete();
+	}
+
 	protected Element getGenerator(SwordConfiguration config)
 	{
 		String generatorUri = config.generator();

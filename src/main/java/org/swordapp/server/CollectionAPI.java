@@ -122,6 +122,7 @@ public class CollectionAPI extends SwordAPIEndpoint
 			}
         }
 
+		Deposit deposit = null;
         try
         {
             // the first thing to do is determine what the deposit type is:
@@ -134,7 +135,7 @@ public class CollectionAPI extends SwordAPIEndpoint
             String slug = req.getHeader("Slug");
             boolean inProgress = this.getInProgress(req);
 
-            Deposit deposit = new Deposit();
+            deposit = new Deposit();
             deposit.setInProgress(inProgress);
             deposit.setSlug(slug);
             DepositReceipt receipt = null;
@@ -212,6 +213,11 @@ public class CollectionAPI extends SwordAPIEndpoint
 			// authentication actually failed at the server end; not a SwordError, but
 			// need to throw a 403 Forbidden
 			resp.sendError(403);
+		}
+		finally
+		{
+			// get rid of any temp files used
+			this.cleanup(deposit);
 		}
     }
 	protected void addGenerator(DepositReceipt doc, SwordConfiguration config)

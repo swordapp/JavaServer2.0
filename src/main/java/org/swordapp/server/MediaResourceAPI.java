@@ -156,10 +156,12 @@ public class MediaResourceAPI extends SwordAPIEndpoint
 			}
         }
 
+		Deposit deposit = null;
+
         try
         {
             String editMediaIRI = this.getFullUrl(req);
-            Deposit deposit = new Deposit();
+            deposit = new Deposit();
 
             // add the properties from the binary deposit
             this.addDepositPropertiesFromBinary(deposit, req);
@@ -185,6 +187,11 @@ public class MediaResourceAPI extends SwordAPIEndpoint
 			// authentication actually failed at the server end; not a SwordError, but
 			// need to throw a 403 Forbidden
 			resp.sendError(403);
+		}
+		finally
+		{
+			// get rid of any temp files used
+			this.cleanup(deposit);
 		}
     }
 
@@ -213,6 +220,7 @@ public class MediaResourceAPI extends SwordAPIEndpoint
 			}
         }
 
+		Deposit deposit = null;
         try
         {
             // the first thing to do is determine what the deposit type is:
@@ -220,7 +228,7 @@ public class MediaResourceAPI extends SwordAPIEndpoint
 			boolean isMultipart = contentType.startsWith("multipart/related");
             String uri = this.getFullUrl(req);
 
-            Deposit deposit = new Deposit();
+            deposit = new Deposit();
 
 			if (isMultipart)
 			{
@@ -274,6 +282,11 @@ public class MediaResourceAPI extends SwordAPIEndpoint
 			// authentication actually failed at the server end; not a SwordError, but
 			// need to throw a 403 Forbidden
 			resp.sendError(403);
+		}
+		finally
+		{
+			// get rid of any temp files used
+			this.cleanup(deposit);
 		}
     }
 

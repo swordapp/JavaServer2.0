@@ -179,6 +179,7 @@ public class ContainerAPI extends SwordAPIEndpoint
 			}
         }
 
+		Deposit deposit = null;
         try
         {
             // the first thing to do is determine what the deposit type is:
@@ -189,7 +190,7 @@ public class ContainerAPI extends SwordAPIEndpoint
             // get the In-Progress header
             boolean inProgress = this.getInProgress(req);
 
-            Deposit deposit = new Deposit();
+            deposit = new Deposit();
             deposit.setInProgress(inProgress);
             String iri = this.getFullUrl(req);
             DepositReceipt receipt;
@@ -277,6 +278,11 @@ public class ContainerAPI extends SwordAPIEndpoint
 			// need to throw a 403 Forbidden
 			resp.sendError(403);
 		}
+		finally
+		{
+			// get rid of any temp files used
+			this.cleanup(deposit);
+		}
     }
 
     public void post(HttpServletRequest req, HttpServletResponse resp)
@@ -304,6 +310,7 @@ public class ContainerAPI extends SwordAPIEndpoint
 			}
         }
 
+		Deposit deposit = null;
         try
         {
             // the first thing to do is determine what the deposit type is:
@@ -321,7 +328,7 @@ public class ContainerAPI extends SwordAPIEndpoint
             boolean inProgress = this.getInProgress(req);
             String iri = this.getFullUrl(req);
 
-            Deposit deposit = new Deposit();
+            deposit = new Deposit();
             deposit.setInProgress(inProgress);
             DepositReceipt receipt;
 
@@ -399,6 +406,11 @@ public class ContainerAPI extends SwordAPIEndpoint
 			// authentication actually failed at the server end; not a SwordError, but
 			// need to throw a 403 Forbidden
 			resp.sendError(403);
+		}
+		finally
+		{
+			// get rid of any temp files used
+			this.cleanup(deposit);
 		}
     }
 
