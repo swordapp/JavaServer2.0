@@ -198,6 +198,9 @@ public class CollectionAPI extends SwordAPIEndpoint
         }
         catch (SwordError se)
         {
+            // get rid of any temp files used
+            this.cleanup(deposit);
+
             this.swordError(req, resp, se);
         }
         catch (SwordServerException e)
@@ -210,6 +213,9 @@ public class CollectionAPI extends SwordAPIEndpoint
         }
 		catch (SwordAuthException e)
 		{
+            // get rid of any temp files used
+            this.cleanup(deposit);
+
 			// authentication actually failed at the server end; not a SwordError, but
 			// need to throw a 403 Forbidden
 			resp.sendError(403);

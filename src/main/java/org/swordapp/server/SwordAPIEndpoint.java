@@ -161,7 +161,10 @@ public class SwordAPIEndpoint
 
 		// Check the size is OK
 		File file = new File(filename);
-		long fLength = file.length() / 1024; // in kilobytes
+        // Set the file to be deposited
+        deposit.setFile(file);
+
+        long fLength = file.length() / 1024; // in kilobytes
 		if ((config.getMaxUploadSize() != -1) && (fLength > config.getMaxUploadSize()))
 		{
 			String msg = "The uploaded file exceeded the maximum file size this server will accept (the file is " +
@@ -183,11 +186,6 @@ public class SwordAPIEndpoint
 				log.debug("Bad MD5 for file. Aborting with appropriate error message");
 				String msg = "The received MD5 checksum for the deposited file did not match the checksum sent by the deposit client";
 				throw new SwordError(UriRegistry.ERROR_CHECKSUM_MISMATCH, msg);
-			}
-			else
-			{
-				// Set the file to be deposited
-				deposit.setFile(file);
 			}
 			log.debug("Package temporarily stored as: " + filename);
 		}
@@ -271,6 +269,7 @@ public class SwordAPIEndpoint
 		}
 
 		tmp.delete();
+        deposit.setFile(null);
 	}
 
 	protected Element getGenerator(SwordConfiguration config)
