@@ -24,7 +24,7 @@ public class DepositReceipt
 	private IRI location = null;
     private Entry entry;
     private Map<String, String> statements = new HashMap<String, String>();
-    private String treatment = null;
+    private String treatment = "no treatment information available";
     private String verboseDescription = null;
     private String splashUri = null;
     private String originalDepositUri = null;
