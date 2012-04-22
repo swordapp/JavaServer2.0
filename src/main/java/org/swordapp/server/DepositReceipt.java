@@ -99,7 +99,7 @@ public class DepositReceipt
             abderaEntry.addSimpleExtension(UriRegistry.SWORD_VERBOSE_DESCRIPTION, this.verboseDescription);
         }
 
-        if (this.splashUri == null)
+        if (this.splashUri != null)
         {
             abderaEntry.addLink(this.splashUri, "alternate");
         }
