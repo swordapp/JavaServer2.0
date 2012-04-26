@@ -347,10 +347,10 @@ public class SwordAPIEndpoint
 	{
 		try
 		{
-			if (!this.config.returnErrorBody())
+			if (!this.config.returnErrorBody() || !e.hasBody())
 			{
 				ErrorDocument doc = new ErrorDocument(e.getErrorUri(), e.getStatus());
-				resp.sendError(doc.getStatus());
+				resp.setStatus(doc.getStatus());
 				return;
 			}
 

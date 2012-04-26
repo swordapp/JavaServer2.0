@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class ErrorDocument
 {
-    private String errorUri;
+    private String errorUri = null;
     private Map<String, Integer> errorCodes = new HashMap<String, Integer>();
     private String summary = null;
     private String verboseDescription = null;
@@ -66,7 +66,7 @@ public class ErrorDocument
             return this.status;
         }
         
-        if (this.errorCodes.containsKey(errorUri))
+        if (errorUri != null && this.errorCodes.containsKey(errorUri))
         {
             return this.errorCodes.get(errorUri);
         }

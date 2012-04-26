@@ -7,10 +7,18 @@ public class SwordError extends Exception
 {
     private String errorUri;
     private int status = -1;
+    private boolean hasBody = true;
 
     public SwordError()
     {
         super();
+    }
+
+    public SwordError(int status)
+    {
+        super();
+        this.status = status;
+        this.hasBody = false;
     }
 
     public SwordError(String errorUri)
@@ -73,5 +81,10 @@ public class SwordError extends Exception
     public int getStatus()
     {
         return status;
+    }
+
+    public boolean hasBody()
+    {
+        return hasBody;
     }
 }
