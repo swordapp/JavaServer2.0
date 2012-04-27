@@ -85,6 +85,7 @@ public class ErrorDocument
 
         // write some boiler-plate text into the document
         Element title = new Element("atom:title", UriRegistry.ATOM_NAMESPACE);
+        title.appendChild("ERROR");
         Element updates = new Element("atom:updated", UriRegistry.ATOM_NAMESPACE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         updates.appendChild(sdf.format(new Date()));
@@ -116,6 +117,20 @@ public class ErrorDocument
             Element vd = new Element("sword:verboseDescription", UriRegistry.SWORD_TERMS_NAMESPACE);
             vd.appendChild(this.verboseDescription);
             error.appendChild(vd);
+        }
+
+        String alternate = config.getAlternateUrl();
+        String altContentType = config.getAlternateUrlContentType();
+        if (alternate != null && !"".equals(alternate))
+        {
+            Element altLink = new Element("atom:link", UriRegistry.ATOM_NAMESPACE);
+            altLink.addAttribute(new Attribute("rel", "alternate"));
+            if (altContentType != null && !"".equals(altContentType))
+            {
+                altLink.addAttribute(new Attribute("type", altContentType));
+            }
+            altLink.addAttribute(new Attribute("href", alternate));
+            error.appendChild(altLink);
         }
 
         try

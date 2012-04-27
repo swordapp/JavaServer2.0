@@ -164,12 +164,12 @@ public class SwordAPIEndpoint
         // Set the file to be deposited
         deposit.setFile(file);
 
-        long fLength = file.length() / 1024; // in kilobytes
+        long fLength = file.length(); // in bytes
 		if ((config.getMaxUploadSize() != -1) && (fLength > config.getMaxUploadSize()))
 		{
 			String msg = "The uploaded file exceeded the maximum file size this server will accept (the file is " +
-							fLength + "kB but the server will only accept files as large as " +
-							config.getMaxUploadSize() + "kB)";
+							fLength + " bytes but the server will only accept files as large as " +
+							config.getMaxUploadSize() + " bytes)";
 			throw new SwordError(UriRegistry.ERROR_MAX_UPLOAD_SIZE_EXCEEDED, msg);
 		}
 

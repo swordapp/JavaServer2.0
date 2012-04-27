@@ -21,4 +21,8 @@ public interface SwordConfiguration
 	String getTempDirectory();
 
 	int getMaxUploadSize();
+
+    String getAlternateUrl();
+
+    String getAlternateUrlContentType();
 }

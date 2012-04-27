@@ -1,8 +1,5 @@
 package org.swordapp.server;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SwordError extends Exception
 {
     private String errorUri;

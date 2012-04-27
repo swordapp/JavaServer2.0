@@ -51,4 +51,14 @@ public class SwordConfigurationDefault implements SwordConfiguration
 	{
 		return -1;
 	}
+
+    public String getAlternateUrl()
+    {
+        return null;
+    }
+
+    public String getAlternateUrlContentType()
+    {
+        return null;
+    }
 }
