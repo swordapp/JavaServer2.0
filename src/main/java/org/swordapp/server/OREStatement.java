@@ -31,9 +31,15 @@ public class OREStatement extends Statement
         // create the default model (in memory) to start with
         Model model = ModelFactory.createDefaultModel();
 
+        // set up some sensible namespaces for the prefixes
+        model.setNsPrefix(UriRegistry.ORE_PREFIX, UriRegistry.ORE_NAMESPACE);
+        model.setNsPrefix(UriRegistry.SWORD_PREFIX, UriRegistry.SWORD_TERMS_NAMESPACE);
+
         // create the resource map in the model
         Resource rem = model.createResource(this.remUri);
         rem.addProperty(RDF.type, model.createResource(UriRegistry.ORE_NAMESPACE + "ResourceMap"));
+
+
 
         // create the aggregation
         Resource agg = model.createResource(this.aggUri);

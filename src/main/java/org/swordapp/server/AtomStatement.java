@@ -23,7 +23,7 @@ public class AtomStatement extends Statement
     public AtomStatement(String feedUri, String author, String title, String updated)
     {
         this.contentType = "application/atom+xml;type=feed";
-		this.author = author != null ? author : "Unknown";
+		this.author = (author != null && !"".equals(author)) ? author : "Unknown";
 		this.feedUri = feedUri;
 		this.title = title != null ? title : "Untitled";
 		this.updated = updated;

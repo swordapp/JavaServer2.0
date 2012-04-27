@@ -4,6 +4,13 @@ import javax.xml.namespace.QName;
 
 public class UriRegistry
 {
+    // Namespace prefixes
+    public static String SWORD_PREFIX = "sword";
+    public static String ORE_PREFIX = "ore";
+    public static String APP_PREFIX = "app";
+    public static String DC_PREFIX = "dcterms";
+    public static String ATOM_PREFIX = "atom";
+
     // Namespaces
     public static String SWORD_TERMS_NAMESPACE = "http://purl.org/net/sword/terms/";
     public static String APP_NAMESPACE = "http://www.w3.org/2007/app";
