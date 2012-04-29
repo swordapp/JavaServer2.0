@@ -35,35 +35,40 @@ public class SwordAPIEndpoint
 		this.config = config;
 	}
 
-	protected AuthCredentials getAuthCredentials(HttpServletRequest request)
+    protected AuthCredentials getAuthCredentials(HttpServletRequest request)
+    			throws SwordAuthException
+    {
+        return this.getAuthCredentials(request, false);
+    }
+
+	protected AuthCredentials getAuthCredentials(HttpServletRequest request, boolean allowUnauthenticated)
 			throws SwordAuthException
 	{
+        // is the user authenticating?
+        String authHeader = request.getHeader("Authorization");
+
 		// is there an On-Behalf-Of header?
 		String obo = request.getHeader("On-Behalf-Of");
 
-		// is authentication required
+		// which authentication scheme do we recognise (should only be Basic)
 		String authType = this.config.getAuthType();
-		boolean authRequired = "Basic".equals(authType);
+		boolean isBasic = "Basic".equals(authType);
 
-		// is the user authenticating?
-		String authHeader = request.getHeader("Authorization");
+		if (isBasic && (authHeader == null || "".equals(authHeader)))
+        {
+            if (!allowUnauthenticated)
+            {
+                throw new SwordAuthException(true);
+            }
+            else
+            {
+                log.debug("No Authentication Credentials supplied");
+			    return new AuthCredentials(null, null, obo);
+            }
+        }
 
-		// are we meant to authenticate, but haven't been given anything?
-		if (authRequired && (authHeader == null || "".equals(authHeader)))
-		{
-			throw new SwordAuthException(true);
-		}
-
-		// by this stage we are either meant to authenticate and have been given credentials or
-		// we don't need to authenticate.  Either way we just fill in the AuthCredentials
+		// decode the auth header and populate the authcredentials object for return
 		String[] userPass = this.decodeAuthHeader(authHeader);
-
-		if (userPass == null)
-		{
-			log.debug("No Authentication Credentials supplied");
-			return new AuthCredentials(null, null, obo);
-		}
-
 		AuthCredentials auth = new AuthCredentials(userPass[0], userPass[1], obo);
 		return auth;
 	}
@@ -85,7 +90,7 @@ public class SwordAPIEndpoint
 		if (!"Basic".equalsIgnoreCase(authBits[0].trim()))
 		{
 			log.warn("Authentication method not supported: " + authBits[0]);
-			return null;
+            throw new SwordAuthException("Authentication method not supported: " + authBits[0]);
 		}
 
 		// get the username and password out of the base64 encoded Basic auth string

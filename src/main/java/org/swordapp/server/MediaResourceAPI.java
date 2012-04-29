@@ -40,7 +40,7 @@ public class MediaResourceAPI extends SwordAPIEndpoint
         AuthCredentials auth = null;
         try
         {
-            auth = this.getAuthCredentials(req);
+            auth = this.getAuthCredentials(req, true);
         }
         catch (SwordAuthException e)
         {
