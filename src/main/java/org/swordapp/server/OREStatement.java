@@ -39,8 +39,6 @@ public class OREStatement extends Statement
         Resource rem = model.createResource(this.remUri);
         rem.addProperty(RDF.type, model.createResource(UriRegistry.ORE_NAMESPACE + "ResourceMap"));
 
-
-
         // create the aggregation
         Resource agg = model.createResource(this.aggUri);
         agg.addProperty(RDF.type, model.createResource(UriRegistry.ORE_NAMESPACE + "Aggregation"));

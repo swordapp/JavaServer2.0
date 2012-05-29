@@ -2,17 +2,20 @@ package org.swordapp.server;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Statement
 {
-    protected String contentType;
-    protected List<OriginalDeposit> originalDeposits;
-    protected Map<String, String> states;
-    protected List<ResourcePart> resources;
-	protected Date lastModified;
+    // common elements with some default values
+    protected String contentType = null;
+    protected List<OriginalDeposit> originalDeposits = new ArrayList<OriginalDeposit>();
+    protected Map<String, String> states = new HashMap<String, String>();
+    protected List<ResourcePart> resources = new ArrayList<ResourcePart>();
+	protected Date lastModified = new Date();
 
     public abstract void writeTo(Writer out) throws IOException;
 
