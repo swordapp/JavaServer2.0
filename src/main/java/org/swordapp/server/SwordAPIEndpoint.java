@@ -35,6 +35,30 @@ public class SwordAPIEndpoint
 		this.config = config;
 	}
 
+    public void get(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException
+    {
+        resp.setCharacterEncoding("UTF-8");
+    }
+
+    public void post(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException
+    {
+        resp.setCharacterEncoding("UTF-8");
+    }
+
+    public void put(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException
+    {
+        resp.setCharacterEncoding("UTF-8");
+    }
+
+    public void delete(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException
+    {
+        resp.setCharacterEncoding("UTF-8");
+    }
+
     protected AuthCredentials getAuthCredentials(HttpServletRequest request)
     			throws SwordAuthException
     {

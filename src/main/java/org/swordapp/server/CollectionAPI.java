@@ -32,6 +32,9 @@ public class CollectionAPI extends SwordAPIEndpoint
     public void get(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
+        // let the superclass prepare the request/response objects
+        super.get(req, resp);
+
         // first find out if this is supported
         if (this.clm == null)
         {
@@ -100,6 +103,9 @@ public class CollectionAPI extends SwordAPIEndpoint
     public void post(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
+        // let the superclass prepare the request/response objects
+        super.post(req, resp);
+
         // do the initial authentication
         AuthCredentials auth = null;
         try

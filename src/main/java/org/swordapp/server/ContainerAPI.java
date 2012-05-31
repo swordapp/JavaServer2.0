@@ -38,6 +38,9 @@ public class ContainerAPI extends SwordAPIEndpoint
     public void get(HttpServletRequest req, HttpServletResponse resp, boolean sendBody)
             throws ServletException, IOException
     {
+        // let the superclass prepare the request/response objects
+        super.get(req, resp);
+
         // do the initial authentication
         AuthCredentials auth = null;
         try
@@ -157,6 +160,9 @@ public class ContainerAPI extends SwordAPIEndpoint
     public void put(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
+        // let the superclass prepare the request/response objects
+        super.put(req, resp);
+
         // do the initial authentication
         AuthCredentials auth = null;
         try
@@ -294,6 +300,9 @@ public class ContainerAPI extends SwordAPIEndpoint
     public void post(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
+        // let the superclass prepare the request/response objects
+        super.post(req, resp);
+
         // do the initial authentication
         AuthCredentials auth = null;
         try
@@ -429,6 +438,9 @@ public class ContainerAPI extends SwordAPIEndpoint
     public void delete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
+        // let the superclass prepare the request/response objects
+        super.delete(req, resp);
+
         // do the initial authentication
         AuthCredentials auth = null;
         try

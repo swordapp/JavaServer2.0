@@ -27,6 +27,9 @@ public class StatementAPI extends SwordAPIEndpoint
     public void get(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException
     {
+        // let the superclass prepare the request/response objects
+        super.get(req, resp);
+
         // do the initial authentication
         AuthCredentials auth = null;
         try
