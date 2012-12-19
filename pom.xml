@@ -8,12 +8,13 @@
     <packaging>war</packaging>
 
     <!-- brings the sonatype snapshot repository and signing requirement on board -->
+<!--
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
-
+-->
     <name>SWORD v2 :: Common Server Library</name>
     <description>
         Common Server Library with interfaces to be implemented by servers
@@ -101,7 +102,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <archiveClasses>true</archiveClasses>
                     <attachClasses>true</attachClasses>
                     <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
                     <warSourceExcludes>WEB-INF/lib/*.jar</warSourceExcludes>
