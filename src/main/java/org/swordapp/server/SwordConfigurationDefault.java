@@ -61,4 +61,9 @@ public class SwordConfigurationDefault implements SwordConfiguration
     {
         return null;
     }
+
+    public boolean allowUnauthenticatedMediaAccess()
+    {
+        return false;
+    }
 }

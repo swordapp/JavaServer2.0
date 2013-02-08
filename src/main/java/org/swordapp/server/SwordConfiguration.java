@@ -25,4 +25,6 @@ public interface SwordConfiguration
     String getAlternateUrl();
 
     String getAlternateUrlContentType();
+
+    boolean allowUnauthenticatedMediaAccess();
 }

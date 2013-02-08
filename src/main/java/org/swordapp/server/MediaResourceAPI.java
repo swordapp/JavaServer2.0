@@ -36,6 +36,8 @@ public class MediaResourceAPI extends SwordAPIEndpoint
     public void get(HttpServletRequest req, HttpServletResponse resp, boolean sendBody)
             throws ServletException, IOException
     {
+        log.debug("GET on Media Resource URL");
+        
         // let the superclass prepare the request/response objects
         super.get(req, resp);
 
@@ -43,7 +45,14 @@ public class MediaResourceAPI extends SwordAPIEndpoint
         AuthCredentials auth = null;
         try
         {
-            auth = this.getAuthCredentials(req, true);
+            // NOTE: if allowUnauthenticated is true, then this will not send a 401 request
+            // back if the client doesn't pre-emptively send the authentication credentials.
+            // This means that basically you can't mix authenticated and unauthenticated
+            // access, which is a nuisance.
+            // FIXME: figure out a way to do authenticated and unauthenticated access simultaneously
+            boolean allowUnauthenticated = this.config.allowUnauthenticatedMediaAccess();
+            auth = this.getAuthCredentials(req, allowUnauthenticated);
+            log.debug("Authentication Credentials extracted: " + auth.getUsername() + " obo: " + auth.getOnBehalfOf());
         }
         catch (SwordAuthException e)
         {
