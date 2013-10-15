@@ -8,6 +8,7 @@ import org.apache.abdera.parser.Parser;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.ParameterParser;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -237,7 +238,7 @@ public class SwordAPIEndpoint
 		{
 			// find out which part we are looking at
 			String contentDisposition = item.getHeaders().getHeader("Content-Disposition");
-			String name = this.getName(contentDisposition);
+			String name = this.getContentDispositionValue(contentDisposition, "name");
 
 			if ("atom".equals(name))
 			{
@@ -252,7 +253,7 @@ public class SwordAPIEndpoint
 			{
 				String md5 = item.getHeaders().getHeader("Content-MD5");
 				String packaging = item.getHeaders().getHeader("Packaging");
-				String filename = this.getFilename(contentDisposition);
+				String filename = this.getContentDispositionValue(contentDisposition, "filename");
 				if (filename == null || "".equals(filename))
 				{
 					throw new SwordError(UriRegistry.ERROR_BAD_REQUEST, "Filename could not be extracted from Content-Disposition");
@@ -349,7 +350,7 @@ public class SwordAPIEndpoint
 		InputStream file = req.getInputStream();
 
 		// now let's interpret and deal with the headers that we have
-		String filename =  this.getFilename(contentDisposition);
+		String filename = this.getContentDispositionValue(contentDisposition, "filename");
 		if (filename == null || "".equals(filename))
 		{
 			throw new SwordError(UriRegistry.ERROR_BAD_REQUEST, "Filename could not be extracted from Content-Disposition");
@@ -419,66 +420,16 @@ public class SwordAPIEndpoint
 		}
 	}
 
-	protected String getFilename(String contentDisposition)
+	protected String getContentDispositionValue(String contentDisposition, String key)
 	{
-		if (contentDisposition == null)
-		{
+		if (contentDisposition == null || key == null) {
 			return null;
 		}
 
-		// content dispositon should be of the form
-		//
-		// Content-Disposition: attachment; filename="[filename]"
-		// but may have other features too, so we need to pick it apart
-		String token = "; filename=";
-		int fnArg = contentDisposition.indexOf(token);
-		String fromFilename = contentDisposition.substring(fnArg + token.length());
-		int nextSemiColon = fromFilename.indexOf(";");
-		if (nextSemiColon < 0)
-		{
-			// we already have the filename
-			return fromFilename;
-		}
-		String filename = fromFilename.substring(0, nextSemiColon);
-		if (filename.startsWith("\""))
-		{
-			filename = filename.substring(1);
-		}
-		if (filename.endsWith("\""))
-		{
-			filename = filename.substring(0, filename.length());
-		}
-
-		return filename;
-	}
-
-	protected String getName(String contentDisposition)
-	{
-		// FIXME: this is the same code as above, but with a different token; generalise
-		if (contentDisposition == null)
-		{
-			return null;
-		}
-
-		// content dispositon should be of the form
-		//
-		// Content-Disposition: attachment; filename="[filename]"
-		// but may have other features too, so we need to pick it apart
-		String token = "; name=";
-		int nameArg = contentDisposition.indexOf(token);
-		String fromName = contentDisposition.substring(nameArg + token.length());
-		int nextSemiColon = fromName.indexOf(";");
-		String name = fromName.substring(0, nextSemiColon);
-		if (name.startsWith("\""))
-		{
-			name = name.substring(1);
-		}
-		if (name.endsWith("\""))
-		{
-			name = name.substring(0, name.length());
-		}
-
-		return name;
+		ParameterParser parameterParser = new ParameterParser();
+		char separator = ';';
+		Map<String, String> parameters = parameterParser.parse(contentDisposition, separator);
+		return parameters.get(key);
 	}
 
 	protected List<DiskFileItem> getPartsFromRequest(HttpServletRequest request)
