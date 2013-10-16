@@ -70,32 +70,52 @@ public class SwordAPIEndpoint
 			throws SwordAuthException
     {
         AuthCredentials auth = null;
-        String authType = this.config.getAuthType();
+        String authType = this.config.getAuthType(); // ideally Basic, but may be "none"
         String obo = "";
-        log.info("Auth type = "+authType);
-        //If we are insisting on "a" form of authentication that is not of type "none"
-        if(!allowUnauthenticated && !authType.equalsIgnoreCase("none"))
+        log.info("Auth type = " + authType);
+
+        // If we are insisting on "a" form of authentication that is not of type "none"
+        if (!authType.equalsIgnoreCase("none"))
         {
             // Has the user passed authentication details
             String authHeader = request.getHeader("Authorization");
+
             // Is there an On-Behalf-Of header?
             obo = request.getHeader("On-Behalf-Of");
+
             // Which authentication scheme do we recognise (should only be Basic)
             boolean isBasic = authType.equalsIgnoreCase("basic");
 
-            if(isBasic && (authHeader == null || authHeader.equals("")))
+            if (isBasic && (authHeader == null || authHeader.equals("")))
             {
-                throw new SwordAuthException(true);
+                if (allowUnauthenticated)
+                {
+                    log.debug("No Authentication Credentials supplied/required");
+                    auth = new AuthCredentials(null, null, obo);
+                    return auth;
+                }
+                else
+                {
+                    throw new SwordAuthException(true);
+                }
             }
-            // decode the auth header and populate the authcredentials object for return
-            String[] userPass = this.decodeAuthHeader(authHeader);
-            auth = new AuthCredentials(userPass[0], userPass[1], obo);
+            else if (isBasic)
+            {
+                // decode the auth header and populate the authcredentials object for return
+                String[] userPass = this.decodeAuthHeader(authHeader);
+                auth = new AuthCredentials(userPass[0], userPass[1], obo);
+            }
+            else
+            {
+                throw new SwordAuthException("Server is not properly configured for authentication");
+            }
         }
         else
         {
             log.debug("No Authentication Credentials supplied/required");
             auth = new AuthCredentials(null, null, obo);
         }
+
         return auth;
     }
 
