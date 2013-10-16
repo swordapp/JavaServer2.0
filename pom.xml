@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.swordapp</groupId>
     <artifactId>sword2-server</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <!-- brings the sonatype snapshot repository and signing requirement on board -->
-<!--
+
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
--->
+
     <name>SWORD v2 :: Common Server Library</name>
     <description>
         Common Server Library with interfaces to be implemented by servers
@@ -29,15 +29,17 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <scm>
-        <url>https://sword-app.svn.sourceforge.net/svnroot/sword-app/JavaServer2.0/trunk</url>
-        <developerConnection>scm:svn:https://sword-app.svn.sourceforge.net/svnroot/sword-app/JavaServer2.0/trunk</developerConnection>
-        <connection>scm:svn:http://sword-app.svn.sourceforge.net/svnroot/sword-app/JavaServer2.0/trunk</connection>
+        <url>git@github.com:swordapp/JavaServer2.0.git</url>
+        <developerConnection>scm:git:git@github.com:swordapp/JavaServer2.0.git</developerConnection>
+        <connection>scm:git:git@github.com:swordapp/JavaServer2.0.git</connection>
     </scm>
+
     <developers>
         <developer>
             <name>Richard Jones</name>
-            <email>rich.d.jones@gmail.com</email>
+            <email>swordv2@oneoverzero.com</email>
         </developer>
     </developers>
 
@@ -121,6 +123,20 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
         </plugins>
     </build>
 
