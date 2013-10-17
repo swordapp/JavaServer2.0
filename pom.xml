@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.swordapp</groupId>
     <artifactId>sword2-server</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <!-- brings the sonatype snapshot repository and signing requirement on board -->
