@@ -5,6 +5,26 @@ This server library is an implementation of the SWORD 2.0 standard defined here
 
 http://swordapp.org/sword-v2/sword-v2-specifications/
 
+Use Maven Central Version
+-------------------------
+
+Include this dependency into your pom.xml to obtain the 1.0 release version of this software
+
+    <dependency>
+        <groupId>org.swordapp</groupId>
+        <artifactId>sword2-server</artifactId>
+        <version>1.0</version>
+        <type>jar</type>
+        <classifier>classes</classifier>
+    </dependency>
+    <dependency>
+        <groupId>org.swordapp</groupId>
+        <artifactId>sword2-server</artifactId>
+        <version>1.0</version>
+        <type>war</type>
+    </dependency>
+
+
 Build
 -----
 
